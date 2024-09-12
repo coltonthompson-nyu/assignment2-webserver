@@ -3,6 +3,11 @@
 #https://docs.python.org/3/library/socket.html#socket.socket.listen
 #https://realpython.com/python-sockets/#echo-server
 
+# TODO
+#Test score (html body content found in message) points awarded: 0/15
+#Test score (404 in message) points awarded: 0/15
+#Test score (headers found in message) points awarded: 5/15
+
 # import socket module
  # In order to terminate the program
 import sys
@@ -82,6 +87,7 @@ def webServer(port=13331):
       #print(e)
 
       #print("404 Not Found")
+      # need to send all at once
       connectionSocket.send("HTTP/1.1 404 Not Found\r\n".encode())
       connectionSocket.send("\r\n".encode())
       connectionSocket.send("<html><body><h1>404 Not Found</h1></body></html>\r\n".encode())
