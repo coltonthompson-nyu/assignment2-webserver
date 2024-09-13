@@ -3,17 +3,19 @@
 #https://docs.python.org/3/library/socket.html#socket.socket.listen
 #https://realpython.com/python-sockets/#echo-server
 
-# TODO
-#Test score (html body content found in message) points awarded: 0/15
-#Test score (404 in message) points awarded: 0/15
-#Test score (headers found in message) points awarded: 5/15
+#Total points awarded: 60.0
+#Test score (ok in message) points awarded: 15/15
+#Test score (200 in message) points awarded: 15/15
+# TODO Test score (html body content found in message) points awarded: 0/15
+# TODO Test score (404 in message) points awarded: 0/15
+# TODO Test score (headers found in message) points awarded: 5/15
+#Test score (status line comes first) points awarded: 12.5
+#Test score (headers come before response body) points awarded: 12.5
 
 # import socket module
  # In order to terminate the program
 import sys
 from socket import *
-import sys
-
 
 
 def webServer(port=13331):
@@ -57,11 +59,13 @@ def webServer(port=13331):
       #Content-Type is an example on how to send a header as bytes. There are more!
       #outputdata = b"Content-Type: text/html; charset=UTF-8\r\n"
 
-        connectionSocket.send("HTTP/1.1 200 OK\r\n".encode())
-        connectionSocket.send(b"Content-Type: text/html; charset=UTF-8\r\n")
+        #connectionSocket.send("HTTP/1.1 200 OK\r\n".encode())
+        #connectionSocket.send(b"Content-Type: text/html; charset=UTF-8\r\n")
+
+        connectionSocket.send("HTTP/1.1 200 OK\nContent-Type: text/html; charset=UTF-8\r\n\r\n".encode())
 
       #Note that a complete header must end with a blank line, creating the four-byte sequence "\r\n\r\n" Refer to https://w3.cs.jmu.edu/kirkpams/OpenCSF/Books/csf/html/TCPSockets.html
-        connectionSocket.send("\r\n\r\n".encode())
+        #connectionSocket.send("\r\n\r\n".encode())
       #Fill in end
                
         #for i in f: #for line in file
@@ -88,9 +92,9 @@ def webServer(port=13331):
 
       #print("404 Not Found")
       # need to send all at once
-      connectionSocket.send("HTTP/1.1 404 Not Found\r\n".encode())
-      connectionSocket.send("\r\n".encode())
-      connectionSocket.send("<html><body><h1>404 Not Found</h1></body></html>\r\n".encode())
+      connectionSocket.send("HTTP/1.1 404 Not Found\r\n\r\n".encode())
+
+      #connectionSocket.send("<html><body><h1>404 Not Found</h1></body></html>\r\n".encode())
 
       #Fill in end
 
