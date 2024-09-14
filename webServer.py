@@ -3,12 +3,12 @@
 #https://docs.python.org/3/library/socket.html#socket.socket.listen
 #https://realpython.com/python-sockets/#echo-server
 
-#Total points awarded: 60.0
+#Total points awarded: 85.0
 #Test score (ok in message) points awarded: 15/15
 #Test score (200 in message) points awarded: 15/15
 # TODO Test score (html body content found in message) points awarded: 0/15
-# TODO Test score (404 in message) points awarded: 0/15
-# TODO Test score (headers found in message) points awarded: 5/15
+#Test score (404 in message) points awarded: 15/15
+#Test score (headers found in message) points awarded: 15/15
   # Missing headers: Content-Type, Server, Connection
 #Test score (status line comes first) points awarded: 12.5
 #Test score (headers come before response body) points awarded: 12.5
@@ -69,7 +69,7 @@ def webServer(port=13331):
           "\r\n"
         )
 
-        connectionSocket.send(hw_header.encode())
+        #connectionSocket.send(hw_header.encode())
 
         #connectionSocket.send("HTTP/1.1 200 OK\r\n".encode())
         #connectionSocket.send(b"Content-Type: text/html; charset=UTF-8\r\nConnection: Keep-Alive\r\n")
@@ -91,8 +91,9 @@ def webServer(port=13331):
 
 
       #Fill in start - append your html file contents #Fill in end
-
-        connectionSocket.send(HW_HTML.encode())
+        hw_response = hw_header + HW_HTML
+        #connectionSocket.send(hw_header.encode())
+        connectionSocket.send(hw_response.encode())
         #connectionSocket.send(b"\r\n")
         f.close()
       #Send the content of the requested file to the client (don't forget the headers you created)!
@@ -113,7 +114,7 @@ def webServer(port=13331):
       #print("exception occured")
       #print(e)
 
-      print("404 Not Found")
+      #print("404 Not Found")
       # need to send all at once
       #connectionSocket.send("HTTP/1.1 404 Not Found\r\n".encode())
       #connectionSocket.send("\r\n".encode())
