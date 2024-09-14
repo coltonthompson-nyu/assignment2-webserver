@@ -40,7 +40,7 @@ def webServer(port=13331):
       message = connectionSocket.recv(1024).decode() #Fill in start -a client is sending you a message   #Fill in end
       filename = message.split()[1]
       #get message
-      print(message)
+      #print(message)
       #print(message.split()[1]) --> /helloworld.html
 
       #opens the client requested file. 
@@ -61,11 +61,12 @@ def webServer(port=13331):
       #outputdata = b"Content-Type: text/html; charset=UTF-8\r\n"
 
         connectionSocket.send("HTTP/1.1 200 OK\r\n".encode())
-        connectionSocket.send(b"Content-Type: text/html; charset=UTF-8\r\n")
-        #connectionSocket.send(b"Server: 127.0.0.2\r\n")
-        connectionSocket.send(b"Connection: keep-alive\r\n")
+        connectionSocket.send(b"Content-Type: text/html; charset=UTF-8\r\nConnection: Keep-Alive\r\n")
+        #connectionSocket.send(b"Server: 127.0.0.2\r\n") #
+        # Server from Wireshark-getting started
+        #     Server: Apache/2.4.6(CentOS) OpenSSL/1.0.2k-fips PHP/7.4.33 mod_perl/2.0.11 Perl/v5.16.3\r\n
 
-      #Note that a complete header must end with a blank line, creating the four-byte sequence "\r\n\r\n" Refer to https://w3.cs.jmu.edu/kirkpams/OpenCSF/Books/csf/html/TCPSockets.html
+        #Note that a complete header must end with a blank line, creating the four-byte sequence "\r\n\r\n" Refer to https://w3.cs.jmu.edu/kirkpams/OpenCSF/Books/csf/html/TCPSockets.html
         connectionSocket.send("\r\n\r\n".encode())
       #Fill in end
                
