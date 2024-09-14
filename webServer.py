@@ -4,10 +4,10 @@
 #https://realpython.com/python-sockets/#echo-server
 #https://docs.python.org/3/library/exceptions.html
 
-#Total points awarded: 85.0
+#Total points awarded: 100.0
 #Test score (ok in message) points awarded: 15/15
 #Test score (200 in message) points awarded: 15/15
-#Test score (html body content found in message) points awarded: 0/15
+#Test score (html body content found in message) points awarded: 15/15
 #Test score (404 in message) points awarded: 15/15
 #Test score (headers found in message) points awarded: 15/15
   # Missing headers: Content-Type, Server, Connection
