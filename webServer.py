@@ -16,6 +16,7 @@
 # import socket module
  # In order to terminate the program
 import sys
+from logging import exception
 from socket import *
 
 
@@ -41,16 +42,16 @@ def webServer(port=13331):
       filename = message.split()[1]
       #get message
       #print(message)
-      #print(message.split()[1]) --> /helloworld.html
+      #print(message.split()[1]) # --> /helloworld.html
 
       #opens the client requested file. 
       #Plenty of guidance online on how to open and read a file in python. How should you read it though if you plan on sending it through a socket?
-      f = open(filename[1:])#,  #fill in start #fill in end)
+      #f = open(filename[1:])#,  #fill in start #fill in end)
 
       #filename logic
       if filename == "/helloworld.html":
-        f = open(filename[1:], "r")
-        outputdata = f.read()
+        #f = open(filename[1:], "r")
+        #outputdata = f.read()
       #fill in end
       
 
@@ -60,27 +61,47 @@ def webServer(port=13331):
       #Content-Type is an example on how to send a header as bytes. There are more!
       #outputdata = b"Content-Type: text/html; charset=UTF-8\r\n"
 
-        connectionSocket.send("HTTP/1.1 200 OK\r\n".encode())
-        connectionSocket.send(b"Content-Type: text/html; charset=UTF-8\r\nConnection: Keep-Alive\r\n")
+        hw_header = (
+          "HTTP/1.1 200 OK\r\n"
+          "Content-Type: text/html; charset=UTF-8\r\n"
+          "Server: Apache\r\n"
+          "Connection: Keep-Alive\r\n"
+          "\r\n"
+        )
+
+        connectionSocket.send(hw_header.encode())
+
+        #connectionSocket.send("HTTP/1.1 200 OK\r\n".encode())
+        #connectionSocket.send(b"Content-Type: text/html; charset=UTF-8\r\nConnection: Keep-Alive\r\n")
         #connectionSocket.send(b"Server: 127.0.0.2\r\n") #
         # Server from Wireshark-getting started
         #     Server: Apache/2.4.6(CentOS) OpenSSL/1.0.2k-fips PHP/7.4.33 mod_perl/2.0.11 Perl/v5.16.3\r\n
 
         #Note that a complete header must end with a blank line, creating the four-byte sequence "\r\n\r\n" Refer to https://w3.cs.jmu.edu/kirkpams/OpenCSF/Books/csf/html/TCPSockets.html
-        connectionSocket.send("\r\n\r\n".encode())
+        #connectionSocket.send("\r\n\r\n".encode())
       #Fill in end
-               
+
         #for i in f: #for line in file
-        for i in range(0, len(outputdata)):
-          connectionSocket.send(outputdata[i].encode())
+        f = open(filename[1:], "r")
+        HW_HTML = f.read()
+        #for line in f:
+          #print(line)
+          #HW_HTML.append(line)
+        #print(HW_HTML)
+
+
       #Fill in start - append your html file contents #Fill in end
-        connectionSocket.send(b"\r\n")
+
+        connectionSocket.send(HW_HTML.encode())
+        #connectionSocket.send(b"\r\n")
         f.close()
       #Send the content of the requested file to the client (don't forget the headers you created)!
       #Send everything as one send command, do not send one line/item at a time!
 
       # Fill in start
       # TODO - missing something?
+      else:
+        raise exception("Invalid File")
       # Fill in end
         
       connectionSocket.close() #closing the connection socket
@@ -92,12 +113,23 @@ def webServer(port=13331):
       #print("exception occured")
       #print(e)
 
-      #print("404 Not Found")
+      print("404 Not Found")
       # need to send all at once
-      connectionSocket.send("HTTP/1.1 404 Not Found\r\n".encode())
-      connectionSocket.send("\r\n".encode())
-      connectionSocket.send("<html><body><h1>404 Not Found</h1></body></html>\r\n".encode())
+      #connectionSocket.send("HTTP/1.1 404 Not Found\r\n".encode())
+      #connectionSocket.send("\r\n".encode())
+      #connectionSocket.send("<html><body><h1>404 Not Found</h1></body></html>\r\n".encode())
 
+      error_header = (
+        "HTTP/1.1 404 Not Found\r\n"
+        "Content-Type: text/html; charset=UTF-8\r\n"
+        "Server: Apache\r\n"
+        "Connection: Keep-Alive\r\n"
+        "\r\n"
+      )
+      error_body = "<html><body><h1>404 Not Found</h1></body></html>"
+
+      error_response = error_header + error_body
+      connectionSocket.send(error_response.encode())
       #Fill in end
 
 
