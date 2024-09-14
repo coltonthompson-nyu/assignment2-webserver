@@ -62,8 +62,8 @@ def webServer(port=13331):
 
         connectionSocket.send("HTTP/1.1 200 OK\r\n".encode())
         connectionSocket.send(b"Content-Type: text/html; charset=UTF-8\r\n")
-        connectionSocket.send(b"Server: 127.0.0.2; charset=UTF-8\r\n")
-        connectionSocket.send(b"Connection: keep-alive; charset=UTF-8\r\n")
+        #connectionSocket.send(b"Server: 127.0.0.2\r\n")
+        connectionSocket.send(b"Connection: keep-alive\r\n")
 
       #Note that a complete header must end with a blank line, creating the four-byte sequence "\r\n\r\n" Refer to https://w3.cs.jmu.edu/kirkpams/OpenCSF/Books/csf/html/TCPSockets.html
         connectionSocket.send("\r\n\r\n".encode())
