@@ -2,11 +2,12 @@
 #https://www.geeksforgeeks.org/socket-programming-python/
 #https://docs.python.org/3/library/socket.html#socket.socket.listen
 #https://realpython.com/python-sockets/#echo-server
+#https://docs.python.org/3/library/exceptions.html
 
 #Total points awarded: 85.0
 #Test score (ok in message) points awarded: 15/15
 #Test score (200 in message) points awarded: 15/15
-# TODO Test score (html body content found in message) points awarded: 0/15
+#Test score (html body content found in message) points awarded: 0/15
 #Test score (404 in message) points awarded: 15/15
 #Test score (headers found in message) points awarded: 15/15
   # Missing headers: Content-Type, Server, Connection
@@ -16,7 +17,7 @@
 # import socket module
  # In order to terminate the program
 import sys
-from logging import exception
+from logging import exception, raiseExceptions
 from socket import *
 
 
@@ -50,8 +51,6 @@ def webServer(port=13331):
 
       #filename logic
       if filename == "/helloworld.html":
-        #f = open(filename[1:], "r")
-        #outputdata = f.read()
       #fill in end
       
 
@@ -69,8 +68,6 @@ def webServer(port=13331):
           "\r\n"
         )
 
-        #connectionSocket.send(hw_header.encode())
-
         #connectionSocket.send("HTTP/1.1 200 OK\r\n".encode())
         #connectionSocket.send(b"Content-Type: text/html; charset=UTF-8\r\nConnection: Keep-Alive\r\n")
         #connectionSocket.send(b"Server: 127.0.0.2\r\n") #
@@ -83,26 +80,19 @@ def webServer(port=13331):
 
         #for i in f: #for line in file
         f = open(filename[1:], "r")
-        HW_HTML = f.read()
-        #for line in f:
-          #print(line)
-          #HW_HTML.append(line)
-        #print(HW_HTML)
-
+        hw_html = f.read()
 
       #Fill in start - append your html file contents #Fill in end
-        hw_response = hw_header + HW_HTML
-        #connectionSocket.send(hw_header.encode())
+        hw_response = hw_header + hw_html
         connectionSocket.send(hw_response.encode())
-        #connectionSocket.send(b"\r\n")
         f.close()
       #Send the content of the requested file to the client (don't forget the headers you created)!
       #Send everything as one send command, do not send one line/item at a time!
 
       # Fill in start
-      # TODO - missing something?
       else:
-        raise exception("Invalid File")
+        raise IOError
+
       # Fill in end
         
       connectionSocket.close() #closing the connection socket
@@ -111,14 +101,6 @@ def webServer(port=13331):
       # Send response message for invalid request due to the file not being found (404)
       # Remember the format you used in the try: block!
       #Fill in start
-      #print("exception occured")
-      #print(e)
-
-      #print("404 Not Found")
-      # need to send all at once
-      #connectionSocket.send("HTTP/1.1 404 Not Found\r\n".encode())
-      #connectionSocket.send("\r\n".encode())
-      #connectionSocket.send("<html><body><h1>404 Not Found</h1></body></html>\r\n".encode())
 
       error_header = (
         "HTTP/1.1 404 Not Found\r\n"
